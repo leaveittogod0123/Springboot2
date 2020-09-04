@@ -1,11 +1,14 @@
 package com.yobs.playground.springboot2.web;
 
 import com.yobs.playground.springboot2.service.PostsService;
+import com.yobs.playground.springboot2.web.dto.PostsListResponseDto;
 import com.yobs.playground.springboot2.web.dto.PostsResponseDto;
 import com.yobs.playground.springboot2.web.dto.PostsSaveRequestDto;
 import com.yobs.playground.springboot2.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -23,8 +26,13 @@ public class PostsApiController {
         return postsService.update(id, requestDto);
     }
 
+    @GetMapping("/api/v1/posts")
+    public List<PostsListResponseDto> findAll () { return postsService.findAllDesc();}
+
     @GetMapping("/api/v1/posts/{id}")
     public PostsResponseDto findById (@PathVariable Long id){
         return postsService.findById(id);
     }
+
+
 }

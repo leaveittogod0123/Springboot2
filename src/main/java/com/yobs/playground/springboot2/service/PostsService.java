@@ -2,12 +2,15 @@ package com.yobs.playground.springboot2.service;
 
 import com.yobs.playground.springboot2.domain.posts.Posts;
 import com.yobs.playground.springboot2.domain.posts.PostsRepository;
+import com.yobs.playground.springboot2.web.dto.PostsListResponseDto;
 import com.yobs.playground.springboot2.web.dto.PostsResponseDto;
 import com.yobs.playground.springboot2.web.dto.PostsSaveRequestDto;
 import com.yobs.playground.springboot2.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -33,5 +36,11 @@ public class PostsService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id"+ id));
 
         return new PostsResponseDto(entity);
+    }
+    @Transactional
+    public List<PostsListResponseDto> findAllDesc() {
+        return postsRepository.findAllDesc().stream()
+                .map(PostsListResponseDto::new)
+                .collect(Collectors.toList());
     }
 }
