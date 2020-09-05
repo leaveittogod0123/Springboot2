@@ -20,20 +20,21 @@ import { star } from "ionicons/icons";
 import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
 
+const url = "http://localhost:8080/api/v1/posts";
+
 const PostUpdate: React.FC = () => {
   const [title, setTitle] = useState<string>();
   const [author, setAuthor] = useState<string>();
   const [content, setContent] = useState<string>();
 
   const [showToast1, setShowToast1] = useState(false);
+  const [showToast2, setShowToast2] = useState(false);
 
   const history = useHistory();
 
   const { id } = useParams();
 
   useIonViewDidEnter(async () => {
-    const url = "http://localhost:8080/api/v1/posts";
-
     console.log(id);
     try {
       const result = await axios.get(`${url}/${id}`);
@@ -52,7 +53,6 @@ const PostUpdate: React.FC = () => {
   }, []);
 
   const onSave = useCallback(async () => {
-    const url = "http://localhost:8080/api/v1/posts";
     try {
       const result = await axios.put(`${url}/${id}`, {
         title,
@@ -66,6 +66,14 @@ const PostUpdate: React.FC = () => {
 
   const onCancel = useCallback(() => {
     history.push("/post");
+  }, []);
+
+  const onDelete = useCallback(async () => {
+    try {
+      const result = await axios.delete(`${url}/${id}`);
+      history.push("/post");
+      setShowToast2(true);
+    } catch (error) {}
   }, []);
 
   return (
@@ -107,6 +115,9 @@ const PostUpdate: React.FC = () => {
             </IonButton>
             <IonButton color="success" onClick={onSave}>
               수정
+            </IonButton>
+            <IonButton color="danger" onClick={onDelete}>
+              삭제
             </IonButton>
           </div>
         </IonList>

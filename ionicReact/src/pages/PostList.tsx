@@ -56,7 +56,7 @@ const PostList: React.FC = () => {
               return (
                 <IonItem key={id}>
                   <Link to={`/postUpdate/${id}`}>
-                    <IonCard style={{ width: "300px" }}>
+                    <IonCard style={{ width: "100%" }}>
                       <IonCardHeader>
                         <IonCardSubtitle>작성자:{author}</IonCardSubtitle>
                         <IonCardTitle>제목:{title}</IonCardTitle>
