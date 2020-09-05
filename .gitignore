@@ -3,4 +3,5 @@
 build/
 docker/
 application.properties
+application-oauth.properties
 node_module/
