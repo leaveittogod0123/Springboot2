@@ -8,16 +8,14 @@ import {
   IonItem,
   IonLabel,
   IonList,
-  IonItemDivider,
   IonTextarea,
   IonButton,
-  IonIcon,
   IonToast,
 } from "@ionic/react";
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState, useCallback } from "react";
 import "./Home.css";
-import { star } from "ionicons/icons";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Home: React.FC = () => {
   const [title, setTitle] = useState<string>();
@@ -35,7 +33,7 @@ const Home: React.FC = () => {
   const onSave = useCallback(async () => {
     const url = "http://localhost:8080/api/v1/posts";
     try {
-      const result = await axios.post(url, {
+      await axios.post(url, {
         title,
         author,
         content,
@@ -43,13 +41,21 @@ const Home: React.FC = () => {
       setShowToast1(true);
       reset();
     } catch (error) {}
-  }, [title, author, content]);
+  }, [title, author, content, reset]);
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>게시글 등록</IonTitle>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <IonTitle>게시글 등록</IonTitle>
+          </div>
         </IonToolbar>
       </IonHeader>
       <IonContent>
@@ -79,7 +85,9 @@ const Home: React.FC = () => {
             ></IonTextarea>
           </IonItem>
           <div style={{ padding: "15px" }}>
-            <IonButton color="medium">취소</IonButton>
+            <Link to={"/"}>
+              <IonButton color="medium">취소</IonButton>
+            </Link>
             <IonButton color="success" onClick={onSave}>
               등록
             </IonButton>

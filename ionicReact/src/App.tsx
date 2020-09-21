@@ -23,7 +23,7 @@ import "@ionic/react/css/display.css";
 
 /* Theme variables */
 import "./theme/variables.css";
-import { fingerPrint } from "ionicons/icons";
+import "bulma/css/bulma.css";
 import { PostUpdate } from "./pages/PostUpdate";
 
 const App: React.FC = () => (

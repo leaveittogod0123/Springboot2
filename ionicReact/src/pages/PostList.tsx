@@ -1,23 +1,14 @@
 import {
+  IonButton,
   IonContent,
   IonHeader,
   IonPage,
   IonTitle,
   IonToolbar,
-  IonCard,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCardContent,
-  IonCardTitle,
-  IonItem,
-  IonIcon,
-  IonLabel,
-  IonButton,
-  IonList,
   useIonViewDidEnter,
-  IonListHeader,
 } from "@ionic/react";
 import React, { useState } from "react";
+import { Item, Label } from "semantic-ui-react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
@@ -45,31 +36,50 @@ const PostList: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>게시글 조회</IonTitle>
+          <div
+            className="columns"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <IonTitle className="column">
+              스프링부트로 시작하는 웹 서비스
+            </IonTitle>
+            <Link to={`/postInsert`}>
+              <IonButton color="primary" className="column">
+                글 등록
+              </IonButton>
+            </Link>
+          </div>
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <IonList>
-          {postList &&
-            postList?.map((ele) => {
-              const { id, author, title, content, modifiedDate: date } = ele;
-              return (
-                <IonItem key={id}>
-                  <Link to={`/postUpdate/${id}`}>
-                    <IonCard style={{ width: "100%" }}>
-                      <IonCardHeader>
-                        <IonCardSubtitle>작성자:{author}</IonCardSubtitle>
-                        <IonCardTitle>제목:{title}</IonCardTitle>
-                      </IonCardHeader>
-
-                      <IonCardContent>내용:{content}</IonCardContent>
-                      <IonCardContent>수정날짜: {date}</IonCardContent>
-                    </IonCard>
-                  </Link>
-                </IonItem>
-              );
-            })}
-        </IonList>
+        <div style={{ background: "#ffffff" }}>
+          <Item.Group divided style={{ marginTop: 20 + "px" }}>
+            {postList &&
+              postList?.map((ele) => {
+                const { id, author, title, content, modifiedDate: date } = ele;
+                return (
+                  <Item key={id} style={{ padding: "18px" }}>
+                    <Link to={`/postUpdate/${id}`}>
+                      <Item.Content>
+                        <Item.Header>
+                          <Item.Header>제목:{title}</Item.Header>
+                        </Item.Header>
+                        <Item.Meta>작성자:{author}</Item.Meta>
+                        <Item.Description>내용:{content}</Item.Description>
+                        <Item.Extra>
+                          <Label>수정날짜: {date}</Label>
+                        </Item.Extra>
+                      </Item.Content>
+                    </Link>
+                  </Item>
+                );
+              })}
+          </Item.Group>
+        </div>
       </IonContent>
     </IonPage>
   );

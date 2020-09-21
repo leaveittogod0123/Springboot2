@@ -8,15 +8,12 @@ import {
   IonItem,
   IonLabel,
   IonList,
-  IonItemDivider,
   IonTextarea,
   IonButton,
-  IonIcon,
   IonToast,
   useIonViewDidEnter,
 } from "@ionic/react";
 import React, { useState, useCallback } from "react";
-import { star } from "ionicons/icons";
 import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
 
@@ -46,15 +43,9 @@ const PostUpdate: React.FC = () => {
     } catch (error) {}
   }, [id]);
 
-  const reset = useCallback(() => {
-    setAuthor("");
-    setTitle("");
-    setContent("");
-  }, []);
-
   const onSave = useCallback(async () => {
     try {
-      const result = await axios.put(`${url}/${id}`, {
+      await axios.put(`${url}/${id}`, {
         title,
         author,
         content,
@@ -62,19 +53,21 @@ const PostUpdate: React.FC = () => {
 
       setShowToast1(true);
     } catch (error) {}
-  }, [title, author, content]);
+  }, [id, title, author, content]);
 
   const onCancel = useCallback(() => {
     history.push("/post");
-  }, []);
+  }, [history]);
 
   const onDelete = useCallback(async () => {
     try {
-      const result = await axios.delete(`${url}/${id}`);
-      history.push("/post");
+      await axios.delete(`${url}/${id}`);
+      setTimeout(() => {
+        history.push("/post");
+      });
       setShowToast2(true);
     } catch (error) {}
-  }, []);
+  }, [history, id]);
 
   return (
     <IonPage>
