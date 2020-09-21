@@ -52,6 +52,11 @@ const PostList: React.FC = () => {
                 글 등록
               </IonButton>
             </Link>
+            <Link to={`/postInsert`}>
+              <IonButton color="success" className="column">
+                글 등록
+              </IonButton>
+            </Link>
           </div>
         </IonToolbar>
       </IonHeader>
